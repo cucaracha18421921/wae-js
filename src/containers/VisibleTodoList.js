@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { toggleTodo } from '../actions'
+import {TextFilters, toggleTodo} from '../actions'
 import TodoList from '../components/TodoList'
 import { VisibilityFilters } from '../actions'
 
@@ -16,9 +16,20 @@ const getVisibleTodos = (todos, filter) => {
   }
 }
 
-const mapStateToProps = state => ({
-  todos: getVisibleTodos(state.todos, state.visibilityFilter)
-})
+const highlightSearchText = (todo,highlightText) => ({...todo,highlightText})
+
+const mapStateToProps = state => {
+  let {todos: result} = state;
+  if(state.searchFilter !== ''){
+    const {searchFilter} = state;
+    result = state.todos
+        .filter(todo=> todo.text.indexOf(searchFilter) !== -1)
+        .map(todo=>highlightSearchText(todo,searchFilter));
+  }
+  return {
+    todos: getVisibleTodos(result, state.visibilityFilter)
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
   toggleTodo: id => dispatch(toggleTodo(id))

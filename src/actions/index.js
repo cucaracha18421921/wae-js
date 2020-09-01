@@ -15,6 +15,16 @@ export const toggleTodo = id => ({
   id
 })
 
+
+export const filterByText = searchText => ({
+  type: TextFilters.TEXT_FILTER,
+  searchText
+});
+
+export const TextFilters = {
+  TEXT_FILTER: 'FILTER_BY_TEXT'
+}
+
 export const VisibilityFilters = {
   SHOW_ALL: 'SHOW_ALL',
   SHOW_COMPLETED: 'SHOW_COMPLETED',
