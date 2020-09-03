@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import {TextFilters, toggleTodo} from '../actions'
+import { toggleTodo } from '../actions'
 import TodoList from '../components/TodoList'
 import { VisibilityFilters } from '../actions'
 
@@ -18,7 +18,7 @@ const getVisibleTodos = (todos, filter) => {
 
 const highlightSearchText = (todo,highlightText) => ({...todo,highlightText})
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
   let {todos: result} = state;
   if(state.searchFilter !== ''){
     const {searchFilter} = state;

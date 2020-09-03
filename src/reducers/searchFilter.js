@@ -1,4 +1,4 @@
-import {TextFilters} from "../actions";
+import { TextFilters } from "../actions";
 
 const searchFilter = (state = '' , action) => {
   if(action.type === TextFilters.TEXT_FILTER){

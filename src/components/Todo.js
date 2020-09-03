@@ -1,23 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { splitTextIntoWords } from "../utils/textUtils";
+import styled from "styled-components";
+
+const HighlightedText = styled.a`
+  background-color: yellow;
+`;
 
 const renderText = (text, highlightText ) => {
   if(!highlightText){
     return <a>{text}</a>;
   }
-
-  const matchingRegExp = RegExp(highlightText, 'g');
-  const highlightTextLength = highlightText.length;
-  const matchingIndices = text.matchAll(matchingRegExp);
-  let result = [];
-  let lastIndex = 0;
-  for( const {index} of matchingIndices){
-    result.push(text.substring(lastIndex,index));
-    result.push(text.substring(index,index+highlightTextLength));
-    lastIndex = index+highlightTextLength;
-  }
-  result = result.filter(t=>t!=='');
-  return result.map(text=><a style={{backgroundColor:(text === highlightText)?'yellow':'none'}}>{text}</a>)
+  const highlightedTextArray = splitTextIntoWords(text, highlightText);
+  return highlightedTextArray.map(({text, highlight}) =>(highlight)?<HighlightedText>{text}</HighlightedText>:<a>{text}</a>)
 };
 
 const Todo = ({ onClick, completed, text, highlightText }) => (

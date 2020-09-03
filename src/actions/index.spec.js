@@ -1,4 +1,5 @@
 import * as actions from './index'
+import {TextFilters} from "./index";
 
 describe('todo actions', () => {
   it('addTodo should create ADD_TODO action', () => {
@@ -22,4 +23,12 @@ describe('todo actions', () => {
       id: 1
     })
   })
+
+  it('filters todos by searchText', ()=> {
+    expect(actions.filterByText('high')).toEqual({
+      type: TextFilters.TEXT_FILTER,
+      searchText: 'high'
+    })
+  })
+
 })
