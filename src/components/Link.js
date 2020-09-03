@@ -1,16 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {Button} from "./uiComponents";
+import styled from "styled-components";
+
+const LinkButton = styled(Button)`
+  margin-left: 4px;
+  &:disabled {
+    background-color: rgba(0,0,0,0.1);
+  }
+`;
 
 const Link = ({ active, children, onClick }) => (
-    <button
+    <LinkButton
        onClick={onClick}
        disabled={active}
-       style={{
-           marginLeft: '4px',
-       }}
     >
       {children}
-    </button>
+    </LinkButton>
 )
 
 Link.propTypes = {

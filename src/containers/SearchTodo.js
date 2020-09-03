@@ -7,7 +7,7 @@ const mapStateToProps = (state = {}) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onClick: (searchText)=> {
+  submitSearch: (searchText)=> {
     dispatch(filterByText(searchText));
   },
   onKeyUp: (event) => {console.log(`Key was Released, contained text is: ${event.target.value}`)}
