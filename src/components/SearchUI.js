@@ -23,14 +23,14 @@ const AutoFilterContainer = styled.div`
   flex-direction: row;
 `;
 
-function SearchUI({submitSearch, onKeyUp}){
+function SearchUI({submitSearch}){
   const [searchText, setSearchText] = useState('');
   const [autoFilter, setAutoFilter] = useState(false);
   return (
     <div>
       <AutoFilterContainer>
         <span>Auto Filter</span>
-        <AutoFilterSwitch type="checkbox" onChange={()=>{
+        <AutoFilterSwitch type="checkbox" data-test-id={'AutoFilterSwitch'} onChange={()=>{
           if(autoFilter){
             setAutoFilter(false);
           }
@@ -40,7 +40,7 @@ function SearchUI({submitSearch, onKeyUp}){
           }
         }}/>
       </AutoFilterContainer>
-      <SearchInput type="text" placeholder={"Filter By text..."}
+      <SearchInput type="text" data-test-id="SearchInput" placeholder={"Filter By text..."}
          onChange={event => {
            const searchText = event.target.value;
            setSearchText(searchText);

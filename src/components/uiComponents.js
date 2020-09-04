@@ -27,3 +27,12 @@ export const Input = styled.input`
     outline: none;
     }
 `;
+
+
+export const Text = styled.a`
+  font-size: xx-large;
+`;
+
+export const HighlightedText = styled(Text)`
+  background-color: yellow;
+`;

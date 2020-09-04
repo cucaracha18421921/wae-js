@@ -4,15 +4,15 @@ import Todo from './Todo'
 
 const TodoList = ({ todos, toggleTodo }) => (
   <ul>
-    {todos.map(todo =>
+    {todos.map((todo,index) =>
       <Todo
-        key={todo.id}
         {...todo}
+        key={`todo-${index}`}
         onClick={() => toggleTodo(todo.id)}
       />
     )}
   </ul>
-)
+);
 
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.shape({
@@ -22,6 +22,6 @@ TodoList.propTypes = {
     text: PropTypes.string.isRequired
   }).isRequired).isRequired,
   toggleTodo: PropTypes.func.isRequired
-}
+};
 
 export default TodoList
