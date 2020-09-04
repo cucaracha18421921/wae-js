@@ -1,4 +1,4 @@
-Dear Quint,
+Dear Evaluator,
 
 In this file you will find the whys and the hows of my assignment
 
