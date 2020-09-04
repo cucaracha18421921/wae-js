@@ -1,0 +1,96 @@
+Dear Quint,
+
+In this file you will find the whys and the hows of my assignment
+
+--- HOW ---
+I added in the existing codebase a SearchUI component which contains
+1) AutoFilterSwitch
+This checkbox is used to indicate whether searchQueries are executed every time the user adds a character in the Search Input
+When this is disabled the user has to submit the query by clicking on the Submit button
+2) SearchInput
+This input contains the text that the user wants to query on the todos
+3) SearchButton
+When AutoFilterSwitch is on the Button is not present. When AutoFilterSwitch is on then this button appears.
+When the user clicks it the query is executed and the list of the todos is filter and the found word is highlighted, multiple times if found on the same todo
+The filtering of the Incomplete,Active, All is working along with the search query
+More precisely when the user enters a query the redux state is updated and then the
+1) searchFilter action passes the query to redux
+2) searchFilter reducer picks up the action and updates the state by passing the searchText variable which contains the query
+3) VisibleTodoList container is receiving the state change "searchText" and upon that filters the todos by search query and visibility as well
+4) TodoList component re-renders the appropriate todos
+5) Upon rendering a to-do we are splitting the to-do into parts of "<a>" that contain or don't contain the highilight text and we render a background-color yellow to achieve the highlight effect
+
+
+--- Technologies used: ----
+React 16 ( Hooks ), Redux, Styled Components
+Testing ( Jest, Enzyme )
+
+Why Hooks
+Lately the introduction of Hooks in React was a big and important change
+I prefer to use them since I can create more stateless ui components that leave on their own
+Testing is easier and more reliable since they can be completely isolated.
+
+Why Redux
+Regardless the fact of Redux required, this is my goto global state management tool as well
+With react you can create nice stateless ui components and give them abilities to communicate with the global state when needed
+and keep the logic outside of the ui component to keep it pure to do only one job ( Render )
+
+I chose to only use redux state on SearchTodo component, since it was the only part of the code that I thought should communicate with the global state
+
+Why Styled Components
+
+Writing css with Styled Components gives two major advantages
+1) I can use css as code, since I can create Ui Components that only contain functionality ( i.e. when to render, update on state changes, add interactions etc )
+Later this pure functional components I can wrap with some old school css style text that gives them the appropriate styling.
+This means that I can easily migrate sass or scss and migrate from there
+2) I can very nicely abstract styles with this tool.
+i.e. I can have a Button that I created for We are eves with the appropriate brand styling. I can then create another button with some extra tweak on the style without having to repeat code
+In the file src/components/uiComponents.js I have this standard Button, Input components which I use throughout the application
+In file SearchUi.js and AddTodoUI.js I extended this elements with some flexbox functionality in order to facilitate the positioning of them
+
+Testing ( Jest, enzyme )
+I find Jest as the most accessible tool for testing
+I used jest for testing the functional parts of the application, by just writting equality tests
+In this set-up equality tests were enough to test-cover my codebase
+
+For Ui components I used enzyme in order to look for components appearing and disappearing in my ui,
+check if state updates were happening when simulated click, change events were applied on the UI
+
+For Components that were too dumb and without functionality I used snapshot testing to detect UI changes that are going to be introduced.
+I usually use snapshot testing mostly as a reminder of ( Have you changed the look and feel of a component without noticing? )
+
+----- Folder Structure Breakdown -----
+src/
+actions
+Contains my Redux actions. I only have an index.js file since the scope of this assignment was too small to analyze further
+
+components/
+Every Pure UI Component
+Every component on this folder contains only Rendering logic and functional logic that is narrowed down to the scope of every component
+Everything local state related lives here
+
+components/uiComponents.js
+This file contains Styled Button, Styled Input styled Components. I always try to have a breakdown in that way, since it allows me to re-use branded components around my application.
+I can also use this components in ui-testing and I find it very convenient since I can check if a particular component is rendered or not
+
+containers/
+Every Redux wrapper that wraps a Pure Ui compoent from /components lives here
+Testing on this is limited since the only significant logic appears only on VisibleTodoList.js every other file is just returning the state and I find testing on non-functionality as redundant
+
+reducers/
+contains all the reducers. I prefer to have an one to one mapping with actions, although this was a small application and I didn't find time to break down actions into separate files,
+but in a real-life application that would be something I would do
+
+utils/
+In every codebase I create I use utils since this kind of pattern makes it easy to test and develop with testing complex functionality
+The most complex logic in this app was the highlight of text. To develop this I create a list of tests ( use-cases) that I wanted my code to pass
+Later on I created the splitTextIntoWords function in a util, developed it till all my test-cases were successful and I just used it in my code in
+my VisibleTodoList.js container which hosted the pure UI component that agnostically rendered to-dos that were identified as "to be highlighted"
+
+---WorkArounds---
+The existing codebase was using a form. Using a form was hard to test with jest and enzyme, since the actual components were unecessary nested deeper due to the form
+I don't want to use forms just for the sake of using it, since I like to use them whenever I have to communicate data in the backend with POST requests. Although with the recent tooling even this is not really necessary
+In any case there was no point within the context of adding a to-do on a list didn't need to have a form
+By removing it though I gained testing powers, but I lost the functionality of tab navigation
+To retaliate on that matter I just added a keyUp event on the AddTodoInput which was detecting if enter was pushed and the to-do was added in the list.
+
